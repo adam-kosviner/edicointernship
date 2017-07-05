@@ -1,92 +1,68 @@
+import subprocess
+import sys
 
 
-def cutIt(interval,filename):
-    writer=open(filename+'.vcf',"w+")
-    firstline = 0
-    below = 0
-    belowLine=''
-    chrom1=0;
-    #firstline lets the first line of the vcf print unconditionally
-    #below is set to zero to allow the first run; below is normaly changed at the bottom of the method
-    with open("/home/adam/varsim/vcfSplit/subset_dbsnp_2.txt", "r") as stream:
-        for i, line in enumerate(stream):
-            if line[0] == '#':
-                writer.write (line)
-                continue
-            # ^ skips comments
-            #if firstline == 0:
-             #   firstline = 1
-             #   writer.write (line)
-              #  reference = int(line.split()[1])
-             #   chrom1 = int(line.split()[0][3:])
-            # ^ prints first line and esablishes reference value as previously printed value as well as first chromesome tested
 
-            chrom2 = int(line.split()[0][3:])
-            if chrom1 != chrom2:
-                reference = int(line.split()[1])
-                writer.write(line)
-                chrom1 = chrom2
-                dontCompare=1
-            # ^ if the chromesome changes the first line of the new chrom prints
-            print reference
-            print reference + interval
-            print int(line.split()[1])
-            print
-            if (int(reference+interval) < int(line.split()[1])) & dontCompare==0:
-                above = line.split()[1]
-                above=int(above)
-                #above is the higher of the two values that the reference+interval is between
 
-                if (above-reference) < (reference-below):
-                    writer.write(line)
-                    reference = above-(above%interval)
+def create_vcf_with_specified_variant_rate(desired_interval, input_vcf, intersection_name, output_vcf, bed_file):
+    previous_chromosome = None
+    this_variant_position = None
+
+    # open either vcf or vcf.gz
+    if '.gz' in input_vcf:
+        import gzip
+        open_gz_safe = gzip.open
+    else:
+        open_gz_safe = open
+
+    #subprocess.check_output("bedtools intersect -a "+ bed_file + " -b "+ input_vcf + " > " + intersection_name, shell=True)
+
+
+    with open(output_vcf, 'w') as stream_out:
+        with open_gz_safe(input_vcf) as stream_in:
+            for i, line in enumerate(stream_in):
+
+                if line[0] == '#':
+                    stream_out.write(line)
+                    #print(line)
+                    continue
+
+                # import pdb; pdb.set_trace()
+                this_chromosome = line.split()[0]
+                this_variant_position = int(line.split()[1])
+
+                if this_chromosome != previous_chromosome:
+                    previous_chromosome = this_chromosome
+                    ref_position = this_variant_position
+                    stream_out.write(line)
+                    belowline = line
+                    below = this_variant_position
+                    target = ref_position + desired_interval
+                    continue
+
+                if this_variant_position > target:
+                    above = this_variant_position
+                    if (above - target) < (target - below):
+                        stream_out.write(line)
+                       # print("interval a: ", above - ref_position)
+                        #print(line)
+                        ref_position = above
+                    else:
+                        if below > ref_position:
+                            stream_out.write(belowline)
+                           # print("interval b: ", below - ref_position)
+                           # print(line)
+                            ref_position = below
+                    target = ref_position + desired_interval
                 else:
-                    writer.write(belowLine)
-                    reference = below - (below % interval)
-            below = line.split()[1]
-            below= int(below)
-            belowLine=line
-            dontCompare=1
-            # bottom is the lower of the two values that the reference+interval is between
+                    below = this_variant_position
+                    belowline = line
 
-def cutIt2(interval, filename):
-    writer = open(filename + '.vcf', "w+")
-    chrom1 = 0
-    below=0
-    interval= int(interval)
-    with open("/home/adam/varsim/vcfSplit/subset_dbsnp_2.txt", "r") as stream:
-        for i, line in enumerate(stream):
 
-            if line[0] == '#':
-                writer.write (line)
-                continue
-
-            chrom2 = int(line.split()[0][3:])
-            if chrom2 != chrom1:
-                chrom1 = chrom2
-                writer.write(line)
-                reference = int(line.split()[1])
-                belowline = line
-                below = int(line.split()[1])
-                continue
-
-            target =reference+interval
-            current = int(line.split()[1])
-
-            if target < current:
-                above = current
-
-                if above - target < target - below:
-                    print 1
-                    writer.write(line)
-                    reference = above #- (int(line.split()[1]) % interval)
-                else:
-                    writer.write(belowline)
-                    reference = below #- (below % interval)
-            else:
-                belowline = line
-                below = current
-
-cutIt2(1000,'test')
-
+if __name__ == '__main__':
+    vcf_in = '/home/adam/varsim/small.vcf'#vcfSplit/subset_dbsnp_2.txt'
+    vcf_out = '/home/adam/PycharmProjects/vcfSimplify/test.vcf'
+    bed_in = '/home/adam/varsim/mrjd_test.bed'
+    int_name= "int_test.txt"
+    create_vcf_with_specified_variant_rate(1000, vcf_in, int_name, vcf_out, bed_in)
     #cutIt(imput interval spacing, output vcf name)
