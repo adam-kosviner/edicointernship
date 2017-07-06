@@ -8,7 +8,7 @@ import logging
 
 def getBedchr(line):
     chr = line.split()[0]
-    chr=chr[3:]
+    #chr=chr[3:]
     #chr=int(chr)
     return chr
 
@@ -39,29 +39,42 @@ def getVcfIndex(line):
 
 def initialise(bedLocation, vcfLocation):
     #getchr returns a string
+    beddict = {}
     bedlist = []
+
     with open(bedLocation, "r") as stream:
+
         for i, line in enumerate(stream):
-            chr1 = getBedchr(line)
-            range1= getBedRng1(line)
-            range2= getBedRng2(line)
-            bedlist.append([chr1,range1,range2])
-    bedlist.sort()
-    print bedlist
+            line =line.replace('\n','')
+            line = line.replace('\t', ' ')
+            chrcurrent = getBedchr(line)
+            if chrcurrent not in beddict:
+                beddict[chrcurrent]=[]
+            #range1= getBedRng1(line)
+            #range2= getBedRng2(line)
+            beddict[chrcurrent].append(line)
+    #with open(vcfLocation, "r") as stream:
+        #for x, line2 in enumerate(stream):
+
+
+    beddict.sort()
+    print beddict
+    print beddict['chr13'][0]
     j=0
     with open(vcfLocation, "r") as stream:
         for p, line2 in enumerate(stream):
             chr2 = getVcfChr(line2)
             index = getVcfIndex(line2)
-            if chr2 > bedlist[j][0]:
-                while chr2 != bedlist[j][0]:
-                    j=j+1
-            if chr2 == bedlist[j][0] and bedlist[j][1] <= index and index <= bedlist[j][2]:
-                print line2
 
-            elif chr2 == bedlist[j][0] and index > bedlist[j][2]:
-                while index > bedlist[j][2]:
-                    j=j+1
+           # if chr2 > bedlist[j][0]:
+            #    while chr2 != bedlist[j][0]:
+            #        j=j+1
+            #if chr2 == bedlist[j][0] and bedlist[j][1] <= index and index <= bedlist[j][2]:
+            #    print line2
+
+           # elif chr2 == bedlist[j][0] and index > bedlist[j][2]:
+            #    while index > bedlist[j][2]:
+            #        j=j+1
 
 
 def compare(bedLocation, vcfLocation):

@@ -15,7 +15,7 @@ def create_vcf_with_specified_variant_rate(desired_interval, input_vcf, intersec
     else:
         open_gz_safe = open
 
-    #subprocess.check_output("bedtools intersect -a "+ bed_file + " -b "+ input_vcf + " > " + intersection_name, shell=True)
+    subprocess.check_output("bedtools intersect -a "+ bed_file + " -b "+ input_vcf + " > " + intersection_name, shell=True)
 
 
     with open(output_vcf, 'w') as stream_out:
@@ -64,5 +64,6 @@ if __name__ == '__main__':
     vcf_out = '/home/adam/PycharmProjects/vcfSimplify/test.vcf'
     bed_in = '/home/adam/varsim/mrjd_test.bed'
     int_name= "int_test.txt"
-    create_vcf_with_specified_variant_rate(1000, vcf_in, int_name, vcf_out, bed_in)
+    #create_vcf_with_specified_variant_rate(1000, vcf_in, int_name, vcf_out, bed_in)
     #cutIt(imput interval spacing, output vcf name)
+    create_vcf_with_specified_variant_rate(1000,/mnt/vault/theoh/mrjd/dbsnp-142.vcf,test1000.txt,dbsnp-142-test.vcf,/mnt/vault/theoh/mrjd/mrjd_test.bed
