@@ -1,0 +1,3 @@
+2017-07-06 12:43:24,874 Checking if imput vcf has .gz ending
+2017-07-06 12:43:24,875 bedtools intersect -a /mnt/vault/theoh/mrjd/dbsnp-142.vcf  -b /mnt/vault/theoh/mrjd/mrjd_test.bed  > int_test.txt
+2017-07-06 12:43:24,875 Running bedtools intersect function
