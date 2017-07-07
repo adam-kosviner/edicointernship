@@ -1,30 +1,45 @@
 import subprocess
-import sys
+import logging
+
+logging.basicConfig(filename='bedlog.log', level=logging.INFO, format='%(asctime)s %(message)s')
 
 
-
-
-def create_vcf_with_specified_variant_rate(desired_interval, input_vcf, intersection_name, output_vcf, bed_file):
+def create_vcf_with_specified_variant_rate(desired_interval, input_vcf, intersection_name, output_vcf, bed_file,chromesome_start_point):
     previous_chromosome = None
     this_variant_position = None
 
     # open either vcf or vcf.gz
+    logging.info("Checking if imput vcf has .gz ending")
     if '.gz' in input_vcf:
         import gzip
         open_gz_safe = gzip.open
     else:
         open_gz_safe = open
-
-    subprocess.check_output("bedtools intersect -a "+ bed_file + " -b "+ input_vcf + " > " + intersection_name, shell=True)
-
+    if bed_file != "":
+        bedtoolsrun ="bedtools intersect -a " + input_vcf +" -b "+ bed_file +" > " + intersection_name
+        logging.info(bedtoolsrun)
+        logging.info( "Running bedtools intersect function")
+        try:
+            subprocess.check_output(bedtoolsrun, shell=True)
+        except RuntimeError:
+            logging.info("Bedtools failed due to runtime error.")
+        except TypeError:
+            logging.info("Bedtools failed due to type error.")
+        except ValueError:
+            logging.info("Bedtools failed due to value  error.")
+        except NameError:
+            logging.info("Bedtools failed due to name  error.")
+    else:
+        intersection_name = input_vcf
+    logging.info("Beginning to take interval samples from outputted vcf")
 
     with open(output_vcf, 'w') as stream_out:
-        with open_gz_safe(input_vcf) as stream_in:
+        with open_gz_safe(intersection_name) as stream_in:
             for i, line in enumerate(stream_in):
 
                 if line[0] == '#':
                     stream_out.write(line)
-                    #print(line)
+                    # print(line)
                     continue
 
                 # import pdb; pdb.set_trace()
@@ -44,26 +59,26 @@ def create_vcf_with_specified_variant_rate(desired_interval, input_vcf, intersec
                     above = this_variant_position
                     if (above - target) < (target - below):
                         stream_out.write(line)
-                       # print("interval a: ", above - ref_position)
-                        #print(line)
+                        # print("interval a: ", above - ref_position)
+                        # print(line)
                         ref_position = above
                     else:
                         if below > ref_position:
                             stream_out.write(belowline)
-                           # print("interval b: ", below - ref_position)
-                           # print(line)
+                            # print("interval b: ", below - ref_position)
+                            # print(line)
                             ref_position = below
                     target = ref_position + desired_interval
                 else:
                     below = this_variant_position
                     belowline = line
-
-
+    logging.info("done")
 if __name__ == '__main__':
-    vcf_in = '/home/adam/varsim/small.vcf'#vcfSplit/subset_dbsnp_2.txt'
+    vcf_in = '/mnt/vault/theoh/mrjd/dbsnp-142.vcf'
+    # vcfSplit/subset_dbsnp_2.txt'
     vcf_out = '/home/adam/PycharmProjects/vcfSimplify/test.vcf'
-    bed_in = '/home/adam/varsim/mrjd_test.bed'
-    int_name= "int_test.txt"
-    #create_vcf_with_specified_variant_rate(1000, vcf_in, int_name, vcf_out, bed_in)
-    #cutIt(imput interval spacing, output vcf name)
-    create_vcf_with_specified_variant_rate(1000,'/mnt/vault/theoh/mrjd/dbsnp-142.vcf',int_name,dbsnp-142-test.vcf,/mnt/vault/theoh/mrjd/mrjd_test.bed
+    bed_in = '/mnt/vault/theoh/mrjd/mrjd_test.bed'
+    int_name = "int_test.txt"
+    # create_vcf_with_specified_variant_rate(1000, vcf_in, int_name, vcf_out, bed_in)
+    # cutIt(imput interval spacing, output vcf name)
+    create_vcf_with_specified_variant_rate(1000, vcf_in, int_name, 'dbsnp-142-test.vcf', bed_in,1)

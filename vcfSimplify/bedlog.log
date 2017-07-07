@@ -1,3 +1,89 @@
 2017-07-06 12:43:24,874 Checking if imput vcf has .gz ending
 2017-07-06 12:43:24,875 bedtools intersect -a /mnt/vault/theoh/mrjd/dbsnp-142.vcf  -b /mnt/vault/theoh/mrjd/mrjd_test.bed  > int_test.txt
 2017-07-06 12:43:24,875 Running bedtools intersect function
+2017-07-07 15:23:34,817 Checking if imput vcf has .gz ending
+2017-07-07 15:23:34,823 Beginning to take interval samples from outputted vcf
+2017-07-07 15:25:24,405 Checking if imput vcf has .gz ending
+2017-07-07 15:25:24,405 Beginning to take interval samples from outputted vcf
+2017-07-07 15:25:24,429 done
+2017-07-07 15:28:39,404 Checking if imput vcf has .gz ending
+2017-07-07 15:28:39,408 Beginning to take interval samples from outputted vcf
+2017-07-07 15:28:39,409 done
+2017-07-07 15:29:07,116 Checking if imput vcf has .gz ending
+2017-07-07 15:29:07,123 Beginning to take interval samples from outputted vcf
+2017-07-07 15:29:07,124 done
+2017-07-07 16:08:59,707 Checking if imput vcf has .gz ending
+2017-07-07 16:08:59,709 Beginning to take interval samples from outputted vcf
+2017-07-07 16:08:59,716 done
+2017-07-07 16:09:42,990 Checking if imput vcf has .gz ending
+2017-07-07 16:09:42,995 Beginning to take interval samples from outputted vcf
+2017-07-07 16:09:42,997 done
+2017-07-07 16:09:55,223 Checking if imput vcf has .gz ending
+2017-07-07 16:09:55,223 Beginning to take interval samples from outputted vcf
+2017-07-07 16:09:55,224 done
+2017-07-07 16:10:19,714 Checking if imput vcf has .gz ending
+2017-07-07 16:10:19,732 Beginning to take interval samples from outputted vcf
+2017-07-07 16:10:19,733 done
+2017-07-07 16:10:35,951 Checking if imput vcf has .gz ending
+2017-07-07 16:10:35,954 Beginning to take interval samples from outputted vcf
+2017-07-07 16:10:35,956 done
+2017-07-07 16:13:12,896 Checking if imput vcf has .gz ending
+2017-07-07 16:13:12,896 Beginning to take interval samples from outputted vcf
+2017-07-07 16:13:12,897 done
+2017-07-07 16:15:04,681 Checking if imput vcf has .gz ending
+2017-07-07 16:15:04,690 Beginning to take interval samples from outputted vcf
+2017-07-07 16:15:04,691 done
+2017-07-07 16:19:31,120 Checking if imput vcf has .gz ending
+2017-07-07 16:19:31,120 Beginning to take interval samples from outputted vcf
+2017-07-07 16:19:31,121 done
+2017-07-07 16:24:37,177 Checking if imput vcf has .gz ending
+2017-07-07 16:24:37,178 Beginning to take interval samples from outputted vcf
+2017-07-07 16:24:37,179 done
+2017-07-07 16:25:27,078 Checking if imput vcf has .gz ending
+2017-07-07 16:25:27,082 Beginning to take interval samples from outputted vcf
+2017-07-07 16:25:27,084 done
+2017-07-07 16:25:58,642 Checking if imput vcf has .gz ending
+2017-07-07 16:25:58,642 Beginning to take interval samples from outputted vcf
+2017-07-07 16:25:58,643 done
+2017-07-07 16:26:15,901 Checking if imput vcf has .gz ending
+2017-07-07 16:26:15,905 Beginning to take interval samples from outputted vcf
+2017-07-07 16:26:15,908 done
+2017-07-07 16:27:20,142 Checking if imput vcf has .gz ending
+2017-07-07 16:27:20,142 Beginning to take interval samples from outputted vcf
+2017-07-07 16:27:20,146 done
+2017-07-07 16:27:22,464 Checking if imput vcf has .gz ending
+2017-07-07 16:27:22,464 Beginning to take interval samples from outputted vcf
+2017-07-07 16:27:22,466 done
+2017-07-07 16:28:17,298 Checking if imput vcf has .gz ending
+2017-07-07 16:28:17,298 Beginning to take interval samples from outputted vcf
+2017-07-07 16:28:17,317 done
+2017-07-07 16:31:48,326 Checking if imput vcf has .gz ending
+2017-07-07 16:31:48,327 Beginning to take interval samples from outputted vcf
+2017-07-07 16:31:48,328 done
+2017-07-07 16:41:05,773 Checking if imput vcf has .gz ending
+2017-07-07 16:41:05,776 Beginning to take interval samples from outputted vcf
+2017-07-07 16:41:05,777 done
+2017-07-07 16:42:47,128 Checking if imput vcf has .gz ending
+2017-07-07 16:42:47,128 Beginning to take interval samples from outputted vcf
+2017-07-07 16:42:47,134 done
+2017-07-07 16:44:39,681 Checking if imput vcf has .gz ending
+2017-07-07 16:44:39,690 Beginning to take interval samples from outputted vcf
+2017-07-07 16:44:39,692 done
+2017-07-07 16:44:50,582 Checking if imput vcf has .gz ending
+2017-07-07 16:44:50,582 Beginning to take interval samples from outputted vcf
+2017-07-07 16:44:50,583 done
+2017-07-07 16:46:58,193 Checking if imput vcf has .gz ending
+2017-07-07 16:46:58,193 Beginning to take interval samples from outputted vcf
+2017-07-07 16:46:58,196 done
+2017-07-07 16:47:32,419 Checking if imput vcf has .gz ending
+2017-07-07 16:47:32,419 Beginning to take interval samples from outputted vcf
+2017-07-07 16:47:32,420 done
+2017-07-07 16:48:14,028 Checking if imput vcf has .gz ending
+2017-07-07 16:48:14,043 Beginning to take interval samples from outputted vcf
+2017-07-07 16:48:14,045 done
+2017-07-07 16:48:19,742 Checking if imput vcf has .gz ending
+2017-07-07 16:48:19,745 Beginning to take interval samples from outputted vcf
+2017-07-07 16:48:19,747 done
+2017-07-07 16:49:29,695 Checking if imput vcf has .gz ending
+2017-07-07 16:49:29,695 Beginning to take interval samples from outputted vcf
+2017-07-07 16:49:29,724 done

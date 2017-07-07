@@ -4,10 +4,11 @@ import logging
 logging.basicConfig(filename='bedlog.log', level=logging.INFO, format='%(asctime)s %(message)s')
 
 
-def create_vcf_with_specified_variant_rate(desired_interval, input_vcf, intersection_name, output_vcf, bed_file):
+def create_vcf_with_specified_variant_rate(desired_interval, input_vcf, output_vcf, bed_file,chromosome_start_point):
     previous_chromosome = None
     this_variant_position = None
-
+    counter = int(0)
+    intersection_name = 'intersection.vcf'
     # open either vcf or vcf.gz
     logging.info("Checking if imput vcf has .gz ending")
     if '.gz' in input_vcf:
@@ -47,14 +48,22 @@ def create_vcf_with_specified_variant_rate(desired_interval, input_vcf, intersec
                 this_variant_position = int(line.split()[1])
 
                 if this_chromosome != previous_chromosome:
+                    counter = chromosome_start_point
+                    # counter lets user set dna piece to start with on a new chromosome
                     previous_chromosome = this_chromosome
                     ref_position = this_variant_position
-                    stream_out.write(line)
+                    target = ref_position
+                    if counter == 0:
+                        stream_out.write(line)
+                        target = ref_position + desired_interval
                     belowline = line
                     below = this_variant_position
-                    target = ref_position + desired_interval
                     continue
-
+                if counter > 0:
+                    counter = counter -1
+                    belowline = line
+                    below = this_variant_position
+                    continue
                 if this_variant_position > target:
                     above = this_variant_position
                     if (above - target) < (target - below):
@@ -74,11 +83,10 @@ def create_vcf_with_specified_variant_rate(desired_interval, input_vcf, intersec
                     belowline = line
     logging.info("done")
 if __name__ == '__main__':
-    vcf_in = '/mnt/vault/theoh/mrjd/dbsnp-142.vcf'
-    # vcfSplit/subset_dbsnp_2.txt'
-    vcf_out = '/home/adam/PycharmProjects/vcfSimplify/test.vcf'
-    bed_in = '/mnt/vault/theoh/mrjd/mrjd_test.bed'
-    int_name = "int_test.txt"
+    #vcf_in = '/mnt/vault/theoh/mrjd/dbsnp-142.vcf'
+    #vcf_out = '/home/adam/PycharmProjects/vcfSimplify/test.vcf'
+    #bed_in = '/mnt/vault/theoh/mrjd/mrjd_test.bed'
+    #int_name = "int_test.txt"
     # create_vcf_with_specified_variant_rate(1000, vcf_in, int_name, vcf_out, bed_in)
     # cutIt(imput interval spacing, output vcf name)
-    create_vcf_with_specified_variant_rate(1000, vcf_in, int_name, 'dbsnp-142-test.vcf', bed_in)
+    create_vcf_with_specified_variant_rate(300, '/home/adam/varsim/vcfSplit/subset_dbsnp_2.txt', 'dbsnp-142-test.vcf', '',0 )
