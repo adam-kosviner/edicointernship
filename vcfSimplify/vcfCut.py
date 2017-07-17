@@ -68,15 +68,14 @@ def create_vcf_with_specified_variant_rate(desired_interval, input_vcf, output_v
                     above = this_variant_position
                     if (above - target) < (target - below):
                         stream_out.write(line)
-                        # print("interval a: ", above - ref_position)
-                        # print(line)
                         ref_position = above
                     else:
                         if below > ref_position:
                             stream_out.write(belowline)
-                            # print("interval b: ", below - ref_position)
-                            # print(line)
                             ref_position = below
+                        else:
+                            stream_out.write(line)
+                            ref_position = above
                     target = ref_position + desired_interval
                 else:
                     below = this_variant_position
@@ -89,4 +88,4 @@ if __name__ == '__main__':
     #int_name = "int_test.txt"
     # create_vcf_with_specified_variant_rate(1000, vcf_in, int_name, vcf_out, bed_in)
     # cutIt(imput interval spacing, output vcf name)
-    create_vcf_with_specified_variant_rate(300, '/home/adam/varsim/vcfSplit/subset_dbsnp_2.txt', 'dbsnp-142-test.vcf', '',0 )
+    create_vcf_with_specified_variant_rate(300, '/home/adam/varsim/vcfSplit/subset_dbsnp_2.txt', 'dbsnp-142-test_2.vcf', '',5 )
